@@ -71,12 +71,11 @@ public class SeguroService {
 
 	public void update(String tipoSeguro, Seguro request) {
 		List<Seguro> seguros = repository.findAll();
-		
-
-        for (Seguro seguro : seguros) {
-            if (seguro instanceof SeguroFurto && tipoSeguro.equalsIgnoreCase("furto")) {
+        
+          for (Seguro seguro : seguros) {
+               if (seguro instanceof SeguroFurto && tipoSeguro.equalsIgnoreCase("furto")) {
                 ((SeguroFurto) seguro).setValorApolice(request.getValorApolice());
-            } else if (seguro instanceof SeguroVida && tipoSeguro.equalsIgnoreCase("vida")) {
+            }      else if (seguro instanceof SeguroVida && tipoSeguro.equalsIgnoreCase("vida")) {
                 ((SeguroVida) seguro).setValorApolice(request.getValorApolice());
             }
         }
