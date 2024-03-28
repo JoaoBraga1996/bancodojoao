@@ -9,7 +9,7 @@ import jakarta.persistence.Entity;
 @DiscriminatorValue("vida")
 public class SeguroVida extends Seguro {
 
-	String nomeBeneficiario;
+	private String nomeBeneficiario;
 
 	public SeguroVida() {
 	}

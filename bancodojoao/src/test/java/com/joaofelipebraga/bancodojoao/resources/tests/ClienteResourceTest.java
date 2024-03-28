@@ -24,13 +24,13 @@ import org.springframework.test.web.servlet.ResultActions;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.joaofelipebraga.bancodojoao.dtos.ClienteAtualizarDTO;
 import com.joaofelipebraga.bancodojoao.dtos.ClienteDTO;
-import com.joaofelipebraga.bancodojoao.resources.ClienteController;
+import com.joaofelipebraga.bancodojoao.resources.ClienteResource;
 import com.joaofelipebraga.bancodojoao.services.ClienteService;
 import com.joaofelipebraga.bancodojoao.services.exceptions.DatabaseException;
 import com.joaofelipebraga.bancodojoao.services.exceptions.ResourceNotFoundException;
 import com.joaofelipebraga.bancodojoao.tests.Factory;
 
-@WebMvcTest(ClienteController.class)
+@WebMvcTest(ClienteResource.class)
 public class ClienteResourceTest {
 
 	@Autowired

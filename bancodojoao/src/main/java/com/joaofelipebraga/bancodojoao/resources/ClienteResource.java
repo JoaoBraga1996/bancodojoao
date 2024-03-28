@@ -33,7 +33,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/clientes")
 @Tag(name = "Endpoint Cliente", description = "Pode fazer Crud Total")
-public class ClienteController {
+public class ClienteResource {
 
 	@Autowired
 	ClienteService service;

@@ -20,7 +20,7 @@ import jakarta.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("/contas")
-public class ContaController {
+public class ContaResource {
 
 	@Autowired
 	private ContaService service;

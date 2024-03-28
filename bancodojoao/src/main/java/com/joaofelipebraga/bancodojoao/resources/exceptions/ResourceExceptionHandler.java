@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.joaofelipebraga.bancodojoao.services.exceptions.CepInvalidException;
+import com.joaofelipebraga.bancodojoao.services.exceptions.DailyLimitExceededException;
 import com.joaofelipebraga.bancodojoao.services.exceptions.DataTransferObjectFoundException;
 import com.joaofelipebraga.bancodojoao.services.exceptions.DatabaseException;
 import com.joaofelipebraga.bancodojoao.services.exceptions.InsufficientBalanceException;
@@ -110,6 +111,18 @@ public class ResourceExceptionHandler {
 		err.setTimestamp(Instant.now());
 		err.setStatus(status.value());
 		err.setError("Not allowed");
+		err.setMessage(e.getMessage());
+		err.setPath(request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+
+	@ExceptionHandler(DailyLimitExceededException.class)
+	public ResponseEntity<StandardError> dailyLimit(DailyLimitExceededException e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.FORBIDDEN;
+		StandardError err = new StandardError();
+		err.setTimestamp(Instant.now());
+		err.setStatus(status.value());
+		err.setError("Daily Limit");
 		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
