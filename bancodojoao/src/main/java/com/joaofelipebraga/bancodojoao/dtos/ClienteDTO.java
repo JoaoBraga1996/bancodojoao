@@ -1,6 +1,7 @@
 
 package com.joaofelipebraga.bancodojoao.dtos;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,28 +22,35 @@ public class ClienteDTO {
 
 	@Email
 	private String email;
+	private LocalDate dataAniversario;
 	private Categoria categoria;
 	private Endereco endereco;
+	
 
 	List<ContaDTO> contas = new ArrayList<>();
 
 	public ClienteDTO() {
 	}
 
-	public ClienteDTO(Long id, String nome, String email, Categoria categoria, Endereco endereco) {
+	public ClienteDTO(Long id, String nome, String email, Categoria categoria, Endereco endereco,
+			LocalDate dataAniversario) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
+		this.dataAniversario = dataAniversario;
 		this.categoria = categoria;
 		this.endereco = endereco;
+		
 	}
 
 	public ClienteDTO(Cliente entity) {
 		this.id = entity.getId();
 		this.nome = entity.getNome();
 		this.email = entity.getEmail();
+		this.dataAniversario = entity.getDataAniversario();
 		this.categoria = entity.getCategoria();
 		this.endereco = entity.getEndereco();
+		
 
 	}
 
@@ -72,6 +80,14 @@ public class ClienteDTO {
 		return email;
 	}
 
+	public LocalDate getDataAniversario() {
+		return dataAniversario;
+	}
+
+	public void setDataAniversario(LocalDate dataAniversario) {
+		this.dataAniversario = dataAniversario;
+	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -95,7 +111,5 @@ public class ClienteDTO {
 	public List<ContaDTO> getContas() {
 		return contas;
 	}
-
-
 
 }

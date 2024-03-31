@@ -1,6 +1,8 @@
 package com.joaofelipebraga.bancodojoao.entities;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -26,10 +28,10 @@ public class Cliente {
 	private String nome;
 	private String senha;
 	private String email;
+	private LocalDate dataAniversario;
 	private Instant criadoEm;
 	private Instant atualizadoEm;
 	private Categoria categoria;
-
 
 	@Embedded
 	private Endereco endereco;
@@ -42,7 +44,6 @@ public class Cliente {
 
 	public Cliente(Long id, String cpf, String nome, Categoria categoria, String email, Endereco endereco,
 			String senha) {
-		super();
 		this.id = id;
 		this.cpf = cpf;
 		this.nome = nome;
@@ -90,6 +91,21 @@ public class Cliente {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public LocalDate getDataAniversario() {
+		return dataAniversario;
+	}
+
+	public void setDataAniversario(LocalDate dataAniversario) {
+		Period periodo = Period.between(dataAniversario, LocalDate.now());
+		int idadeAtual = periodo.getYears();
+
+		if (idadeAtual < 18) {
+			throw new IllegalArgumentException();
+		}
+
+		this.dataAniversario = dataAniversario;
 	}
 
 	public Endereco getEndereco() {

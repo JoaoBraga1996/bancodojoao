@@ -47,25 +47,32 @@ public class ClienteService {
 		return list.map(x -> new ClienteDTO(x));
 	}
 
-
 	public ClienteDTO findById(Long id) {
-	    Optional<Cliente> obj = clienteRepository.findById(id);
-	    Cliente entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entidade não achada"));
-	    return new ClienteDTO(entity, entity.getContas());
+		Optional<Cliente> obj = clienteRepository.findById(id);
+		Cliente entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entidade não achada"));
+		return new ClienteDTO(entity, entity.getContas());
 	}
 
 	@Transactional
 	public ClienteDTO insert(ClienteCriarDTO dto) {
-		Cliente entity = new Cliente();
-		entity.setSenha(dto.getSenha());
-		entity.setCpf(dto.getCpf());
-		integrarApiViaCep(dto, entity);
-		copyDtoToEntity(dto, entity);
 
-		entity = clienteRepository.save(entity);
-		criarContaAutomatico(entity, dto);
+		try {
+			Cliente entity = new Cliente();
+			entity.setSenha(dto.getSenha());
+			entity.setCpf(dto.getCpf());
+			integrarApiViaCep(dto, entity);
+			copyDtoToEntity(dto, entity);
 
-		return new ClienteDTO(entity);
+			entity = clienteRepository.save(entity);
+			criarContaAutomatico(entity, dto);
+
+			return new ClienteDTO(entity);
+
+		}
+
+		catch (IllegalArgumentException e) {
+			throw new ResourceNotFoundException("Idade menor que 18");
+		}
 
 	}
 
@@ -98,12 +105,13 @@ public class ClienteService {
 		entity.setNome(dto.getNome());
 		entity.setCategoria(dto.getCategoria());
 		entity.setEmail(dto.getEmail());
+		entity.setDataAniversario(dto.getDataAniversario());
 		entity.getEndereco().setRua(dto.getEndereco().getRua());
 		entity.getEndereco().setNumero(dto.getEndereco().getNumero());
 		entity.getEndereco().setBairro(dto.getEndereco().getBairro());
 		entity.getEndereco().setComplemento(dto.getEndereco().getComplemento());
-
 		
+
 	}
 
 	private void criarContaAutomatico(Cliente entity, ClienteCriarDTO dto) {
@@ -113,8 +121,6 @@ public class ClienteService {
 		contaCorrente.setNumero();
 		contaCorrente = contaRepository.save(contaCorrente);
 		entity.getContas().add(contaCorrente);
-		
-	
 
 		Email email = new Email(entity.getEmail(), "Bem-vindo ao Banco do João", "Olá, " + entity.getNome()
 				+ "!\n\nSeja bem-vindo ao Banco do João. Sua conta foi criada com sucesso!\n\nAtenciosamente,\nBanco do João");
