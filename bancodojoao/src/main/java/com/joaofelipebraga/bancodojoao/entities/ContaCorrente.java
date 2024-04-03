@@ -1,6 +1,7 @@
 package com.joaofelipebraga.bancodojoao.entities;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -9,20 +10,13 @@ import jakarta.persistence.Entity;
 @DiscriminatorValue("corrente")
 public class ContaCorrente extends Conta {
 
-	private BigDecimal taxaManutecao = new BigDecimal(15);;
+	private BigDecimal taxaManutecao = new BigDecimal(15);
 
 	public ContaCorrente() {
 	}
 
 	public ContaCorrente(Long id, String agencia, String numeroConta, BigDecimal saldo, Cliente cliente) {
 		super(id, agencia, numeroConta, saldo, cliente);
-	}
-
-	public ContaCorrente(Conta entity) {
-		this.cliente = entity.getCliente();
-		this.agencia = entity.getAgencia();
-		this.numero = entity.getNumero();
-
 	}
 
 	public BigDecimal getTaxaManutecao() {
@@ -34,8 +28,12 @@ public class ContaCorrente extends Conta {
 	}
 
 	public void descontarTaxaManutencao() {
-		saldo = saldo.subtract(taxaManutecao);
+		LocalDate horaAtual = LocalDate.now();
 
+		if (horaAtual.getDayOfMonth() == 30) {
+			saldo = saldo.subtract(taxaManutecao);
+
+		}
 	}
 
 }

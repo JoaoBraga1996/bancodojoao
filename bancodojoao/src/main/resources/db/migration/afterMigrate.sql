@@ -1,12 +1,12 @@
 insert into cliente 
-(atualizado_em, categoria, cpf, criado_em, email, bairro, cep, complemento, localidade, numero, rua, uf, nome, senha) 
+(atualizado_em, categoria, cpf, criado_em, email, bairro, cep, complemento, localidade, numero, rua, uf, nome, senha, data_aniversario) 
 values 
-(current_timestamp, 1, '123.456.789-00', current_timestamp, 'exemplo@email.com', 'Centro', '12345-678', 'Apto 101', 'Cidade', '123', 'Rua Exemplo', 'UF', 'Fulano de Tal', 'senha123');
+(current_timestamp, 1, '123.456.789-00', current_timestamp, 'exemplo@email.com', 'Centro', '37820-000', 'Apto 101', 'Arceburgo', '123', 'Rua Exemplo', 'MG', 'Fulano de Tal', 'senha123', '1990-04-12');
 
 insert into cliente 
-(atualizado_em, categoria, cpf, criado_em, email, bairro, cep, complemento, localidade, numero, rua, uf, nome, senha) 
+(atualizado_em, categoria, cpf, criado_em, email, bairro, cep, complemento, localidade, numero, rua, uf, nome, senha, data_aniversario) 
 values 
-(current_timestamp, 0, '987.654.321-00', current_timestamp, 'outroexemplo@email.com', 'Vila Nova', '54321-987', 'Casa', 'Cidade Nova', '456', 'Rua Nova', 'UF', 'Beltrano da Silva', 'outrasenha456');
+(current_timestamp, 0, '987.654.321-00', current_timestamp, 'outroexemplo@email.com', 'Vila Nova', '37820-000', 'Casa', 'Arceburgo', '456', 'Rua Nova', 'MG', 'Beltrano da Silva', 'outrasenha456', '1970-03-14');
 
 
 -- Inserts para a tabela 'conta'

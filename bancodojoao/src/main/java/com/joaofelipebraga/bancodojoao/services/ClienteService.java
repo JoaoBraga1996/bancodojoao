@@ -92,10 +92,12 @@ public class ClienteService {
 	}
 
 	public void delete(Long id) {
+
+		if (!clienteRepository.existsById(id)) {
+			throw new ResourceNotFoundException("Esse ID não exite!" + id);
+		}
 		try {
 			clienteRepository.deleteById(id);
-		} catch (EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException("Id not found " + id);
 		} catch (DataIntegrityViolationException e) {
 			throw new DatabaseException("Cliente não pode ser excluido, pois está vinculado a uma CONTA");
 		}
@@ -110,7 +112,6 @@ public class ClienteService {
 		entity.getEndereco().setNumero(dto.getEndereco().getNumero());
 		entity.getEndereco().setBairro(dto.getEndereco().getBairro());
 		entity.getEndereco().setComplemento(dto.getEndereco().getComplemento());
-		
 
 	}
 
