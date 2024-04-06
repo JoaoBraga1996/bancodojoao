@@ -40,20 +40,20 @@ public class ContaService {
 	}
 
 	@Transactional
-	public ContaDTO insert(Long clienteId, String tipoConta) {
+	public ContaDTO insert(Long clienteId, String tipo) {
 
 		Cliente entityCliente = clienteRepository.findById(clienteId)
 				.orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado com o ID: " + clienteId));
 
 		Conta entity;
 
-		if ("corrente".equalsIgnoreCase(tipoConta)) {
+		if ("corrente".equalsIgnoreCase(tipo)) {
 			entity = new ContaCorrente();
 
-		} else if ("poupanca".equalsIgnoreCase(tipoConta)) {
+		} else if ("poupanca".equalsIgnoreCase(tipo)) {
 			entity = new ContaPoupanca();
 		} else {
-			throw new IllegalArgumentException("Tipo de conta inválido: " + tipoConta);
+			throw new IllegalArgumentException("Tipo de conta inválido: " + tipo);
 		}
 
 		entity.setCliente(entityCliente);

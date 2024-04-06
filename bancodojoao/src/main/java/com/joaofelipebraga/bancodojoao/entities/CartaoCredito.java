@@ -63,7 +63,7 @@ public class CartaoCredito extends Cartao {
 		if (valor.compareTo(limiteDiario.subtract(limiteUtilizado)) > 0) {
 			throw new IllegalArgumentException("Limite diario ultrapassado");
 		} else if (valor.compareTo(limiteCredito.subtract(limiteUtilizado)) > 0) {
-			throw new RuntimeException("Saldo insufiente");
+			throw new IllegalStateException("Saldo insufiente");
 		}
 	}
 }

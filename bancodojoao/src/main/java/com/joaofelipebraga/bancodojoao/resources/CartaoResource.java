@@ -42,10 +42,10 @@ public class CartaoResource {
 
 	}
 
-	@PostMapping(value = "/{tipoCartao}")
-	public ResponseEntity<CartaoDTO> insert(@PathParam(value = "contaId") Long contaId, @PathVariable String tipoCartao,
+	@PostMapping(value = "/{modalidade}")
+	public ResponseEntity<CartaoDTO> insert(@PathParam(value = "contaId") Long contaId, @PathVariable String modalidade,
 			@RequestBody CartaoCriarOuAtualizarDTO dto) {
-		CartaoDTO newDto = service.insert(contaId, tipoCartao, dto);
+		CartaoDTO newDto = service.insert(contaId, modalidade, dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newDto.getId()).toUri();
 		return ResponseEntity.created(uri).body(newDto);
 	}

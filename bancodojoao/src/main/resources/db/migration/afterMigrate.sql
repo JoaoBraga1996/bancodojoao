@@ -24,10 +24,10 @@ values
 
 -- Inserts para a tabela 'cartao'
 insert into cartao (conta_id, numero, senha, status, limite_diario, limite_diario_utilizado, tipo_cartao) 
-values (1, '1234 5678 9012 3456', 'senha123', 1, 200.00, 50.00, 'debito');
+values (1, '1234 5678 9012 3456', 'senha123', 1, 2000.00, 50.00, 'debito');
 
 insert into cartao (conta_id, numero, senha, status, limite_diario, limite_diario_utilizado, limite_credito, limite_utilizado, tipo_cartao) 
-values (2, '9876 5432 1098 7654', 'senha456', 1, 1000.00, 1000.00, 1000.00, 200.00, 'credito');
+values (2, '9876 5432 1098 7654', 'senha456', 1, 1200.00, 20.00, 1000.00, 0.0, 'credito');
 
 -- Inserts para a tabela 'seguro'
 insert into seguro (cartao_id, data_contratacao, descricao_condicao, numero_apolice, valor_apolice, nome_beneficiario, tipo_seguro) 

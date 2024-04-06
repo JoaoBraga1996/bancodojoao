@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.joaofelipebraga.bancodojoao.entities.Cartao;
 import com.joaofelipebraga.bancodojoao.entities.Conta;
+import com.joaofelipebraga.bancodojoao.entities.ContaCorrente;
 
 import jakarta.persistence.Column;
 
@@ -14,6 +15,7 @@ public class ContaDTO {
 	protected Long id;
 	protected String agencia;
 	protected BigDecimal saldo;
+	protected String tipo;
 
 	@Column(unique = true)
 	protected String numero;
@@ -28,6 +30,7 @@ public class ContaDTO {
 		this.agencia = entity.getAgencia();
 		this.numero = entity.getNumero();
 		this.saldo = entity.getSaldo();
+		this.tipo = entity instanceof ContaCorrente ? "corrente" : "poupanca";
 	}
 
 	public ContaDTO(Conta entity, List<Cartao> cartoes) {
@@ -66,6 +69,18 @@ public class ContaDTO {
 
 	public void setSaldo(BigDecimal saldo) {
 		this.saldo = saldo;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
 	}
 
 	public List<CartaoDTO> getCartoes() {

@@ -1,20 +1,24 @@
-package com.joaofelipebraga.bancodojoao.entities;
+package com.joaofelipebraga.bancodojoao.dtos;
 
-public class SeguroRequest {
+import com.joaofelipebraga.bancodojoao.entities.Seguro;
+import com.joaofelipebraga.bancodojoao.entities.SeguroFurto;
+import com.joaofelipebraga.bancodojoao.entities.SeguroVida;
+
+public class SeguroRequestDTO {
 
 	private String itemCoberto;
 	private String nomeBeneficiario;
 
-	public SeguroRequest() {
+	public SeguroRequestDTO() {
 	}
 
-	public SeguroRequest(String itemCoberto, String nomeBeneficiario) {
+	public SeguroRequestDTO(String itemCoberto, String nomeBeneficiario) {
 		super();
 		this.itemCoberto = itemCoberto;
 		this.nomeBeneficiario = nomeBeneficiario;
 	}
 
-	public SeguroRequest(Seguro entity) {
+	public SeguroRequestDTO(Seguro entity) {
 		if (entity instanceof SeguroFurto) {
 			SeguroFurto seguroFurto = (SeguroFurto) entity;
 			this.itemCoberto = seguroFurto.getItemCoberto();

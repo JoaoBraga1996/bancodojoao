@@ -2,7 +2,6 @@ package com.joaofelipebraga.bancodojoao.entities;
 
 import java.math.BigDecimal;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.joaofelipebraga.bancodojoao.entities.enums.Status;
 import com.joaofelipebraga.bancodojoao.services.exceptions.InsufficientBalanceException;
 
@@ -24,11 +23,6 @@ public class CartaoDebito extends Cartao {
 
 	}
 
-	@JsonIgnore
-	public BigDecimal getSaldo() {
-		return conta.getSaldo();
-	}
-
 	@Override
 	public void aplicarTaxa(BigDecimal taxa) {
 		verificarCartaoAtivado();
@@ -38,8 +32,8 @@ public class CartaoDebito extends Cartao {
 	@Override
 	public void realizarPagamento(BigDecimal valor) {
 		bloquearPagamento(valor);
-		 conta.saldo = conta.saldo.subtract(valor);
-		
+		conta.saldo = conta.saldo.subtract(valor);
+
 		limiteDiarioUtilizado = limiteDiarioUtilizado.add(valor);
 
 	}
@@ -48,9 +42,9 @@ public class CartaoDebito extends Cartao {
 	protected void bloquearPagamento(BigDecimal valor) {
 		verificarCartaoAtivado();
 		if (valor.compareTo(limiteDiario.subtract(limiteDiarioUtilizado)) > 0) {
-			throw new RuntimeException("Limite diário excedido para o pagamento");
+			throw new IllegalArgumentException("Limite diário excedido para o pagamento");
 		} else if (conta.saldo.compareTo(valor) < 0) {
-			throw new InsufficientBalanceException("Saldo Insuficiente para realizar pagamento");
+			throw new IllegalStateException("Saldo Insuficiente para realizar pagamento");
 		}
 
 	}

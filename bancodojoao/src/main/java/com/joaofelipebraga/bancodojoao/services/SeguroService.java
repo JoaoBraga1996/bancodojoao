@@ -9,11 +9,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.joaofelipebraga.bancodojoao.dtos.SeguroRequestDTO;
 import com.joaofelipebraga.bancodojoao.entities.Cartao;
 import com.joaofelipebraga.bancodojoao.entities.CartaoCredito;
 import com.joaofelipebraga.bancodojoao.entities.Seguro;
 import com.joaofelipebraga.bancodojoao.entities.SeguroFurto;
-import com.joaofelipebraga.bancodojoao.entities.SeguroRequest;
 import com.joaofelipebraga.bancodojoao.entities.SeguroVida;
 import com.joaofelipebraga.bancodojoao.repositories.CartaoRepository;
 import com.joaofelipebraga.bancodojoao.repositories.SeguroRepository;
@@ -36,7 +36,7 @@ public class SeguroService {
 		return list;
 	}
 
-	public Seguro insert(Long cartaoId, String tipoSeguro, SeguroRequest request) {
+	public Seguro insert(Long cartaoId, String tipoSeguro, SeguroRequestDTO request) {
 		Optional<Cartao> obj = cartaoRepository.findById(cartaoId);
 		Cartao cartaoEntity = obj.orElseThrow(() -> new ResourceNotFoundException("Entidade não achada"));
 
@@ -71,20 +71,17 @@ public class SeguroService {
 
 	public void update(String tipoSeguro, Seguro request) {
 		List<Seguro> seguros = repository.findAll();
-		
 
-        for (Seguro seguro : seguros) {
-            if (seguro instanceof SeguroFurto && tipoSeguro.equalsIgnoreCase("furto")) {
-                ((SeguroFurto) seguro).setValorApolice(request.getValorApolice());
-            } else if (seguro instanceof SeguroVida && tipoSeguro.equalsIgnoreCase("vida")) {
-                ((SeguroVida) seguro).setValorApolice(request.getValorApolice());
-            }
-        }
-		
-        repository.saveAll(seguros);
-        
+		for (Seguro seguro : seguros) {
+			if (seguro instanceof SeguroFurto && tipoSeguro.equalsIgnoreCase("furto")) {
+				((SeguroFurto) seguro).setValorApolice(request.getValorApolice());
+			} else if (seguro instanceof SeguroVida && tipoSeguro.equalsIgnoreCase("vida")) {
+				((SeguroVida) seguro).setValorApolice(request.getValorApolice());
+			}
 		}
+
+		repository.saveAll(seguros);
 
 	}
 
-
+}

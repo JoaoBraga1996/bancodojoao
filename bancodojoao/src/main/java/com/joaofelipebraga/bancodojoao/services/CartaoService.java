@@ -43,27 +43,26 @@ public class CartaoService {
 
 
 	@Transactional
-	public CartaoDTO insert(Long contaId, String tipoCartao, CartaoCriarOuAtualizarDTO dto) {
+	public CartaoDTO insert(Long contaId, String modalidade, CartaoCriarOuAtualizarDTO dto) {
 
 		Conta entityConta = contaRepository.findById(contaId)
 				.orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado com o ID: " + contaId));
 
 		Cartao entity;
 
-		if ("cartaoDebito".equalsIgnoreCase(tipoCartao)) {
+		if ("cartaoDebito".equalsIgnoreCase(modalidade)) {
 			entity = new CartaoDebito();
 
-		} else if ("cartaoCredito".equalsIgnoreCase(tipoCartao)) {
+		} else if ("cartaoCredito".equalsIgnoreCase(modalidade)) {
 			entity = new CartaoCredito();
 
 		} else {
-			throw new IllegalArgumentException("Tipo de conta inválido: " + tipoCartao);
+			throw new IllegalArgumentException("Tipo de conta inválido: " + modalidade);
 		}
 
 		entity.setConta(entityConta);
 		entity.setNumero();
 		entity.setSenha(dto.getSenha());
-		entity.setLimiteDiario(dto.getLimiteDiario());
 		entity = repository.save(entity);
 
 		return new CartaoDTO(entity);

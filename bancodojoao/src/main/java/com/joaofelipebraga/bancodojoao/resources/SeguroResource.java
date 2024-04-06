@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.joaofelipebraga.bancodojoao.dtos.SeguroRequestDTO;
 import com.joaofelipebraga.bancodojoao.entities.Seguro;
-import com.joaofelipebraga.bancodojoao.entities.SeguroRequest;
 import com.joaofelipebraga.bancodojoao.services.SeguroService;
 
 import jakarta.websocket.server.PathParam;
@@ -36,7 +36,7 @@ public class SeguroResource {
 
 	@PostMapping(value = "/{cartaoId}")
 	public ResponseEntity<Seguro> insert(@PathParam(value = "TipoSeguro") String tipoSeguro,
-			@PathVariable Long cartaoId, @RequestBody SeguroRequest request) {
+			@PathVariable Long cartaoId, @RequestBody SeguroRequestDTO request) {
 		Seguro seguro = service.insert(cartaoId, tipoSeguro, request);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(seguro.getId()).toUri();
 		return ResponseEntity.created(uri).body(seguro);

@@ -39,8 +39,8 @@ public class ContaResource {
 
 	@PostMapping(value = "/{tipoConta}")
 	public ResponseEntity<ContaDTO> insert(@PathParam(value = "clienteId") Long clienteId,
-			@PathVariable String tipoConta) {
-		ContaDTO dto = service.insert(clienteId, tipoConta);
+			@PathVariable String tipo) {
+		ContaDTO dto = service.insert(clienteId, tipo);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}

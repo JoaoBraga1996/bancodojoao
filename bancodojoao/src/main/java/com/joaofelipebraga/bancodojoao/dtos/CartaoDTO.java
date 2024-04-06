@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.joaofelipebraga.bancodojoao.entities.Cartao;
 import com.joaofelipebraga.bancodojoao.entities.CartaoCredito;
 import com.joaofelipebraga.bancodojoao.entities.CartaoDebito;
@@ -14,16 +13,14 @@ import com.joaofelipebraga.bancodojoao.entities.enums.Status;
 public class CartaoDTO {
 
 	private Long id;
+	private String modalidade;
 	private String numero;
 	private Status status;;
 	private BigDecimal limiteCredito;
-
-	@JsonProperty(value = "saldoDevedor")
 	private BigDecimal limiteUtilizado;
 
 	private BigDecimal limiteDiario;
 	private BigDecimal limiteDiarioUtilizado;
-	private BigDecimal saldo;
 
 	private List<SeguroDTO> seguros = new ArrayList<>();
 
@@ -31,7 +28,7 @@ public class CartaoDTO {
 	}
 
 	public CartaoDTO(Long id, String numero, Status status, BigDecimal limiteCredito, BigDecimal limiteUtilizado,
-			BigDecimal limiteDiario, BigDecimal limiteDiarioUtilizado, BigDecimal saldo) {
+			BigDecimal limiteDiario, BigDecimal limiteDiarioUtilizado) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -40,19 +37,17 @@ public class CartaoDTO {
 		this.limiteUtilizado = limiteUtilizado;
 		this.limiteDiario = limiteDiario;
 		this.limiteDiarioUtilizado = limiteDiarioUtilizado;
-		this.saldo = saldo;
+
 	}
 
 	public CartaoDTO(Cartao entity) {
-
 		this.id = entity.getId();
+		this.modalidade = entity instanceof CartaoDebito ? "debito" : "credito";
 		this.numero = entity.getNumero();
 		this.status = entity.getStatus();
-		if (entity instanceof CartaoDebito) {
-			this.limiteDiario = ((CartaoDebito) entity).getLimiteDiario();
-			this.limiteDiarioUtilizado = ((CartaoDebito) entity).getLimiteDiarioUtilizado();
-			this.saldo = ((CartaoDebito) entity).getSaldo();
-		} else if (entity instanceof CartaoCredito) {
+		this.limiteDiario = entity.getLimiteDiario();
+		this.limiteDiarioUtilizado = entity.getLimiteDiarioUtilizado();
+		if (entity instanceof CartaoCredito) {
 			this.limiteCredito = ((CartaoCredito) entity).getLimiteCredito();
 			this.limiteUtilizado = ((CartaoCredito) entity).getLimiteUtilizado();
 
@@ -122,12 +117,16 @@ public class CartaoDTO {
 		this.limiteDiarioUtilizado = limiteDiarioUtilizado;
 	}
 
-	public BigDecimal getSaldo() {
-		return saldo;
+	public String getModalidade() {
+		return modalidade;
 	}
 
-	public void setSaldo(BigDecimal saldo) {
-		this.saldo = saldo;
+	public void setModalidade(String modalidade) {
+		this.modalidade = modalidade;
+	}
+
+	public void setSeguros(List<SeguroDTO> seguros) {
+		this.seguros = seguros;
 	}
 
 	public List<SeguroDTO> getSeguros() {
