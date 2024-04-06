@@ -116,6 +116,14 @@ public class Conta {
 		}
 	}
 
+	public void sacar(BigDecimal valor) {
+		if (valor.compareTo(saldo) <= 0) {
+			saldo = saldo.subtract(valor);
+		} else {
+			throw new ArithmeticException();
+		}
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

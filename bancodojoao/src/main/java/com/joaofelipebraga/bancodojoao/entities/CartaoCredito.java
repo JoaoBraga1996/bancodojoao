@@ -61,9 +61,9 @@ public class CartaoCredito extends Cartao {
 	protected void bloquearPagamento(BigDecimal valor) {
 		verificarCartaoAtivado();
 		if (valor.compareTo(limiteDiario.subtract(limiteUtilizado)) > 0) {
-			throw new IllegalArgumentException("Limite diario ultrapassado");
+			throw new IllegalArgumentException();
 		} else if (valor.compareTo(limiteCredito.subtract(limiteUtilizado)) > 0) {
-			throw new IllegalStateException("Saldo insufiente");
+			throw new IllegalStateException();
 		}
 	}
 }

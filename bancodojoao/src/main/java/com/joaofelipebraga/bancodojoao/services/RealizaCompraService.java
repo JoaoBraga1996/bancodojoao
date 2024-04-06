@@ -41,7 +41,10 @@ public class RealizaCompraService {
 		} catch (IllegalArgumentException e) {
 			throw new DailyLimitExceededException("Limite Diario Ultrapassado !");
 		} catch (IllegalStateException e) {
+			throw new InsufficientBalanceException("Limite Insuficiente");
+		} catch (ArithmeticException e) {
 			throw new InsufficientBalanceException("Saldo Insuficiente");
+
 		}
 	}
 
