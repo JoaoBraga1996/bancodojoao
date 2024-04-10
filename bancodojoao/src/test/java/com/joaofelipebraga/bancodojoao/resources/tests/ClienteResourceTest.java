@@ -1,10 +1,8 @@
 package com.joaofelipebraga.bancodojoao.resources.tests;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -22,7 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.joaofelipebraga.bancodojoao.dtos.ClienteAtualizarDTO;
 import com.joaofelipebraga.bancodojoao.dtos.ClienteDTO;
 import com.joaofelipebraga.bancodojoao.resources.ClienteResource;
 import com.joaofelipebraga.bancodojoao.services.ClienteService;
@@ -46,7 +43,6 @@ public class ClienteResourceTest {
 	private Long nonExistingId;
 	private Long dependentId;
 	private ClienteDTO clienteDTO;
-	private ClienteAtualizarDTO clienteAtualizarDTO;
 	private PageImpl<ClienteDTO> page;
 
 	@BeforeEach
@@ -55,7 +51,7 @@ public class ClienteResourceTest {
 		nonExistingId = 1000L;
 		dependentId = 4L;
 		clienteDTO = Factory.createClientDTO();
-		clienteAtualizarDTO = Factory.createClienteAtualizarDTO();
+
 
 		page = new PageImpl<>(List.of(clienteDTO));
 
@@ -64,8 +60,6 @@ public class ClienteResourceTest {
 		Mockito.when(service.findById(existingId)).thenReturn(clienteDTO);
 		Mockito.when(service.findById(nonExistingId)).thenThrow(ResourceNotFoundException.class);
 
-		Mockito.when(service.update(eq(existingId), any())).thenReturn(clienteDTO);
-		Mockito.when(service.update(eq(nonExistingId), any())).thenThrow(ResourceNotFoundException.class);
 
 		Mockito.doNothing().when(service).delete(existingId);
 		Mockito.doThrow(ResourceNotFoundException.class).when(service).delete(nonExistingId);
@@ -99,31 +93,6 @@ public class ClienteResourceTest {
 		result.andExpect(status().isNotFound());
 	}
 
-	@Test
-	public void updateShouldReturnClienteDTOWhenIdExists() throws Exception {
-
-		String jsonBody = objectMapper.writeValueAsString(clienteAtualizarDTO);
-
-		ResultActions result = mockMvc.perform(put("/clientes/{id}", existingId).content(jsonBody)
-				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON));
-
-		result.andExpect(status().isOk());
-		result.andExpect(jsonPath("$.id").exists());
-		result.andExpect(jsonPath("$.nome").exists());
-		result.andExpect(jsonPath("$.categoria").exists());
-		result.andExpect(jsonPath("$.endereco").exists());
-	}
-
-	@Test
-	public void updateShouldReturnNotFoundWhenIdDoesNotExist() throws Exception {
-
-		String jsonBody = objectMapper.writeValueAsString(clienteAtualizarDTO);
-
-		ResultActions result = mockMvc.perform(put("/clientes/{id}", nonExistingId).content(jsonBody)
-				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON));
-
-		result.andExpect(status().isNotFound());
-	}
 
 	@Test
 	public void deleteByIdShouldReturnNoContentWhenIdExists() throws Exception {

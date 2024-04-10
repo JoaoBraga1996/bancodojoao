@@ -1,6 +1,8 @@
 package com.joaofelipebraga.bancodojoao.tests;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDate;
 
 import com.joaofelipebraga.bancodojoao.dtos.ClienteAtualizarDTO;
 import com.joaofelipebraga.bancodojoao.dtos.ClienteDTO;
@@ -18,14 +20,15 @@ public class Factory {
 	static Endereco endereco = new Endereco("37820-000", "Teofilo Jose Anacleto", "85", "Vila Progresso", "casa",
 			"Arceburgo", "MG");
 
-	static Cliente cliente = new Cliente(2L, "12566589858", "João Felipe Braga", Categoria.COMUM,
-			"ronaldoNazario@gmail.com", endereco, "21212");
+	static Cliente cliente = new Cliente(2L, "12566589858", "João Felipe Braga", "21212", "ronaldoNazario@gmail.com", 
+            LocalDate.of(1990, 10, 25), Instant.now(), Instant.now(), Categoria.COMUM, endereco);
+
 
 	public static Cliente createClient() {
-		Cliente cliente = new Cliente(2L, "12566589858", "João Felipe Braga", Categoria.COMUM,
-				"ronaldoNazario@gmail.com", endereco, "ffaosfma");
-		cliente.getContas().add(new ContaCorrente(1L, "40330", "123451", new BigDecimal(1000), cliente));
-		return cliente;
+	    Cliente cliente = new Cliente(2L, "12566589858", "João Felipe Braga", "ffaosfma", "ronaldoNazario@gmail.com",
+	            LocalDate.of(1990, 10, 25), Instant.now(), Instant.now(), Categoria.COMUM, endereco);
+	    cliente.getContas().add(new ContaCorrente(1L, "40330", "123451", new BigDecimal(1000), cliente));
+	    return cliente;
 	}
 
 	public static ClienteDTO createClientDTO() {

@@ -42,15 +42,17 @@ public class Cliente {
 	public Cliente() {
 	}
 
-	public Cliente(Long id, String cpf, String nome, Categoria categoria, String email, Endereco endereco,
-			String senha) {
+	public Cliente(Long id, String cpf, String nome, String senha, String email, LocalDate dataAniversario,
+			Instant criadoEm, Instant atualizadoEm, Categoria categoria, Endereco endereco) {
+		
 		this.id = id;
 		this.cpf = cpf;
 		this.nome = nome;
-		this.categoria = categoria;
-		this.email = email;
-		this.endereco = endereco;
 		this.senha = senha;
+		this.email = email;
+		this.dataAniversario = dataAniversario;
+		this.categoria = categoria;
+		this.endereco = endereco;
 	}
 
 	public Long getId() {
@@ -92,7 +94,7 @@ public class Cliente {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public LocalDate getDataAniversario() {
 		return dataAniversario;
 	}

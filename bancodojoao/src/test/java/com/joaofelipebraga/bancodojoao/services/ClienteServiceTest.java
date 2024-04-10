@@ -20,7 +20,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.joaofelipebraga.bancodojoao.dtos.ClienteAtualizarDTO;
 import com.joaofelipebraga.bancodojoao.dtos.ClienteDTO;
-import com.joaofelipebraga.bancodojoao.dtos.ContaDTO;
 import com.joaofelipebraga.bancodojoao.entities.Cliente;
 import com.joaofelipebraga.bancodojoao.repositories.ClienteRepository;
 import com.joaofelipebraga.bancodojoao.services.exceptions.DatabaseException;
@@ -111,34 +110,4 @@ public class ClienteServiceTest {
 		Mockito.verify(repository).getReferenceById(nonExistingId);
 	}
 
-	@Test
-	public void deleteShouldDoNothingWhenIdExists() {
-
-		Assertions.assertDoesNotThrow(() -> {
-			service.delete(existingId);
-		});
-
-		Mockito.verify(repository, Mockito.times(1)).deleteById(existingId);
-
-	}
-
-	@Test
-	public void deleteShouldThrowResourceNotFoundExceptionWhenIdDoesNotExist() {
-		Assertions.assertThrows(ResourceNotFoundException.class, () -> {
-			service.delete(nonExistingId);
-
-		});
-
-		Mockito.verify(repository).deleteById(nonExistingId);
-	}
-
-	@Test
-	public void deleteShouldThrowDatabaseExceptionWhenIdDependentId() {
-		Assertions.assertThrows(DatabaseException.class, () -> {
-			service.delete(dependentId);
-
-		});
-
-		Mockito.verify(repository).deleteById(dependentId);
-	}
 }

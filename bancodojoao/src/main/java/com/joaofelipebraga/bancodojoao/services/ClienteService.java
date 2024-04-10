@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -68,9 +67,7 @@ public class ClienteService {
 
 			return new ClienteDTO(entity);
 
-		}
-
-		catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			throw new ResourceNotFoundException("Idade menor que 18");
 		}
 
@@ -88,6 +85,8 @@ public class ClienteService {
 			return new ClienteDTO(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id not found " + id);
+		} catch (IllegalArgumentException e) {
+			throw new ResourceNotFoundException("Idade menor que 18");
 		}
 	}
 

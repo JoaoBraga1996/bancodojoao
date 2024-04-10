@@ -17,7 +17,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.joaofelipebraga.bancodojoao.dtos.ContaCriarOuAtualizarDTO;
 import com.joaofelipebraga.bancodojoao.dtos.ContaDTO;
 import com.joaofelipebraga.bancodojoao.entities.Conta;
 import com.joaofelipebraga.bancodojoao.repositories.ContaRepository;

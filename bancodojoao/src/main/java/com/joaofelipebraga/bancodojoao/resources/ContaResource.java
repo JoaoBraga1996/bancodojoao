@@ -37,7 +37,7 @@ public class ContaResource {
 		return ResponseEntity.ok().body(dto);
 	}
 
-	@PostMapping(value = "/{tipoConta}")
+	@PostMapping(value = "/{tipo}")
 	public ResponseEntity<ContaDTO> insert(@PathParam(value = "clienteId") Long clienteId,
 			@PathVariable String tipo) {
 		ContaDTO dto = service.insert(clienteId, tipo);
